@@ -9,28 +9,25 @@
  *  pool.cpp
  ****************************************/
 
+#include "pool.h"
 #include <string>
 
 using namespace std;
 
-class Student {
-public:
-  Student(string name) {}
-  Student(string name, int birthdate) {}
+Student::Student(string name) {}
+Student::Student(string name, int birthdate) {}
 
-  string printableDescription() { return "Student"; }
-  bool matches(Student *otherStu) { return false; }
-};
+string Student::printableDescription() { return "Student"; }
+bool Student::matches(Student *otherStu) { return false; }
 
-class Pool {
-public:
-  Pool() {}
-  Pool(string studentName, int studentBirthdate) {}
 
-  void add(string s) {}
-  void add(string s, int n) {}
-  void readStudents() {}
-  void printMatches(Student *stu) {}
-  void printMatches(Pool *otherPool) {}
-  bool empty() { return false; }
-};
+
+Pool::Pool() {}
+Pool::Pool(string studentName, int studentBirthdate) {}
+
+void Pool::add(string s) {}
+void Pool::add(string s, int n) {}
+void Pool::readStudents() {}
+void Pool::printMatches(Student *stu) {}
+void Pool::printMatches(Pool *otherPool) {}
+bool Pool::empty() { return false; }

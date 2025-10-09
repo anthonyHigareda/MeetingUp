@@ -5,6 +5,5 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(MeetingUp
         main.cpp
-        pool.h
         pool.cpp
 )
