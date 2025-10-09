@@ -1,6 +1,14 @@
-//
-// Created by higaredajra on 10/9/2025.
-//
+/****************************************
+ *  CSC2210 003
+ *  Dr. Hasker
+ *  Fall 2025
+ *
+ *  Anthony Higareda, Jr.
+ *  Created 9 Oct 2025
+ *
+ *  pool.h
+ *  Header file for pool.cpp
+ ****************************************/
 
 #ifndef MEETINGUP_POOL_H
 #define MEETINGUP_POOL_H
