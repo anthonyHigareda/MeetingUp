@@ -13,17 +13,20 @@
 #ifndef MEETINGUP_POOL_H
 #define MEETINGUP_POOL_H
 
+#include <iostream>
 #include <string>
 
 using namespace std;
 
 class Student {
 public:
-  Student(string name);
-  Student(string name, int birthdate);
+  Student(string name, int birthdate = 0);
+  string printableDescription() const;
+  bool matches(Student *otherStu) const;
 
-  string printableDescription();
-  bool matches(Student *otherStu);
+private:
+  string name;
+  int birthdate;
 };
 
 class Pool {
@@ -37,6 +40,10 @@ public:
   void printMatches(Student *stu);
   void printMatches(Pool *otherPool);
   bool empty();
+
+private:
+  Student *studentsInPool[20];
+  int numStudents = 0;
 };
 
 #endif //MEETINGUP_POOL_H
