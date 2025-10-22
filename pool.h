@@ -23,8 +23,11 @@ public:
   Student(string name, int birthdate = 0);
   string printableDescription() const;
   bool matches(Student *otherStu) const;
+  string getName() const;
+  int getBirthdate() const;
 
 private:
+  string replaceUnderscores(string s);
   string name;
   int birthdate;
 };
@@ -34,16 +37,15 @@ public:
   Pool();
   Pool(string studentName, int studentBirthdate = 0);
 
-  void add(string s);
-  void add(string s, int n);
+  void add(string n, int b = 0);
   void readStudents();
   void printMatches(Student *stu);
   void printMatches(Pool *otherPool);
-  bool empty();
+  bool empty() const;
 
 private:
-  Student *studentsInPool[20];
   int numStudents = 0;
+  Student *studentsInPool[20];
 };
 
 #endif //MEETINGUP_POOL_H

@@ -10,12 +10,14 @@
  ****************************************/
 
 #include "pool.h"
+
+#include <algorithm>
 #include <string>
 
 using namespace std;
 
 Student::Student(string name, int birthdate) {
-  this -> name = name;
+  this -> name = replaceUnderscores(name);
   this -> birthdate = birthdate;
 }
 
@@ -28,33 +30,44 @@ string Student::printableDescription() const {
 }
 
 bool Student::matches(Student *otherStu) const {
-  if (this -> birthdate != 0 && otherStu->birthdate == this -> birthdate) {
+  if (birthdate != 0 && otherStu -> getBirthdate() == birthdate) {
     return true;
   }
-  for (char letter : this -> name) {
-    if (otherStu -> name.find(letter) != string::npos && letter != '_') {
-      return true;
+  for (char letter : name) {
+    if (letter != ' ') {
+      if (otherStu -> getName().find(tolower(letter)) != string::npos ||
+          otherStu -> getName().find(toupper(letter)) != string::npos) {
+        return true;
+      }
     }
   }
   return false;
 }
 
+string Student::getName() const {
+  return name;
+}
+
+int Student::getBirthdate() const {
+  return birthdate;
+}
+
+string Student::replaceUnderscores(string s) {
+  while (s.find('_') != string::npos) {
+    s[s.find('_')] = ' ';
+  }
+  return s;
+}
+
 Pool::Pool() {}
 
 Pool::Pool(string studentName, int studentBirthdate) {
-  Student *newStu = new Student(studentName, studentBirthdate);
-  studentsInPool[this -> numStudents++] = newStu;
+  add(studentName, studentBirthdate);
 }
 
-void Pool::add(string s) {
+void Pool::add(string n, int b) {
   if (numStudents < 20) {
-    studentsInPool[this -> numStudents++] = new Student(s);
-  }
-}
-
-void Pool::add(string s, int n) {
-  if (numStudents < 20) {
-    studentsInPool[this -> numStudents++] = new Student(s, n);
+    studentsInPool[numStudents++] = new Student(n, b);
   }
 }
 
@@ -64,8 +77,22 @@ void Pool::readStudents() {
   cin >> studentName >> studentBirthdate;
   while (cin && studentName != "END") {
     add(studentName, studentBirthdate);
+    cin >> studentName >> studentBirthdate;
   }
 }
-void Pool::printMatches(Student *stu) {}
-void Pool::printMatches(Pool *otherPool) {}
-bool Pool::empty() { return false; }
+void Pool::printMatches(Student *stu) {
+  for (int i = 0; i < numStudents; i++) {
+    if (stu -> matches(studentsInPool[i])) {
+      cout << "A perfect match for " <<  stu -> printableDescription() << ": "
+        << studentsInPool[i] -> printableDescription() << endl;
+    }
+  }
+}
+void Pool::printMatches(Pool *otherPool) {
+  for (int i = 0; i < numStudents; i++) {
+    otherPool -> printMatches(studentsInPool[i]);
+  }
+}
+bool Pool::empty() const {
+  return numStudents == 0;
+}
